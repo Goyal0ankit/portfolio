@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project Description</title>
+  <link rel="stylesheet" type="text/css" href="cas.css" id="theme-link">
+</head>
+<body>
+  <header>
+    <h1>Virtual Processor Simulator</h1>
+    <h2>A C++ Console Application for Computer Architecture</h2>
+  </header>
+
+  <main>
+    <section>
+      <h3>About the Project</h3>
+      <p>The Hypothetical Processor Simulation project is a computer architecture project that involves designing and simulating a hypothetical processor using a C++ console application. The goal of this project is to develop a virtual processor model capable of executing macroinstructions defined specifically for this processor.</p>
+    </section>
+
+    <section>
+        <h3>Architecture layout</h3>
+       <img src="image1.jpg" alt="">
+      </section>
+
+
+      <section>
+        <h3>Processor Specification</h3>
+        <ul>
+          <li><strong>Register (i). Special register:</strong>
+            <ul>
+              <li>PC (program counter) – 11bit</li>
+              <li>MAR (memory address register) – 11bit</li>
+              <li>IR (instruction register) – 16bit</li>
+              <li>CAR (control address register) – 8bit</li>
+              <li>SBR (Subroutine register) – 8bit</li>
+            </ul>
+          </li>
+          <li><strong>General purpose register:</strong> B, C, D, A (accumulator) – 16bit</li>
+          <li><strong>I/O register:</strong>
+            <ul>
+              <li>INR (input register) – 16bit</li>
+              <li>OUTR (output register) – 16bit</li>
+            </ul>
+          </li>
+          <li><strong>Memory:</strong>
+            <ul>
+              <li><strong>RAM- 4KiB:</strong> [2k*16 bit]
+                <ul>
+                  <li>Data portion (0x065-0x7FF)</li>
+                  <li>Code portion (0x000-0x064)</li>
+                </ul>
+              </li>
+              <li><strong>ROM- 256*38 bit</strong></li>
+              <li><strong>Cache -</strong>
+                <ul>
+                  <li>Tag: 5bit</li>
+                  <li>Offset: 3bit</li>
+                  <li>Cache line: 2</li>
+                  <li>Block size: 8*38 bit (offset 3 bit)</li>
+                  <li>Total capacity: 16*[5(tag)+1(Valid bit) + 38(cache Data width)]</li>
+                  <li>Data cache capacity: 38*2*8</li>
+                  <li>Look through model</li>
+                  <li>Fully associative organization</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li><strong>Flag:</strong> N (negative), Z (zero), V (overflow) - based on output of ALU, R, W (read write flag based on I/O operation)</li>
+          <li><strong>ALU (arithmetic logic unit):</strong> works with accumulator with 16 bit</li>
+          <li><strong>Barrel shifter:</strong> one input of ALU is passed through the barrel shifter</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>General Working Features</h3>
+        <ul>
+          <li>We divide our instructions based on arithmetic and non-arithmetic, which is decided by the b15 bit of the instruction, enabling the decoder of the barrel shifter for arithmetic operations.</li>
+          <li><strong>Arithmetic instructions (b15 = 0):</strong> ADD, SUB, INC, DEC, MUL, AND, OR, CMA, CLA</li>
+          <li><strong>Non-arithmetic instructions (b15 = 1):</strong> LDA, STA, BUN, BSA, BZ, IN, OUT, HLT</li>
+          <li>Only load, store, and branching instructions have direct access to the memory.</li>
+          <li>We have an implicit operand destination register (A) and source registers (A, B) in arithmetic instructions, with register B passed through the barrel shifter.</li>
+          <li>We divide our RAM memory into code and data portions.</li>
+          <li>When powered on, PC=0X000 and CAR=0XF8.</li>
+          <li>Unique Concepts in the Processor:</li>
+            <ul>
+              <li>One input of ALU is passed through the barrel shifter, allowing for faster implementation of divide and multiply operations.</li>
+              <li>We implement cache memory before ROM, reducing instruction access time.</li>
+              <li>We use branching in ROM using CAR, which decreases the size of the ROM.</li>
+              <li>We implement multiplication using branching in ROM.</li>
+            </ul>
+        </ul>
+      </section>
+
+      
+      <a class="button" href="CA--Ankit Aggarwal.exe">Console Application</a>
+  
+    
+      <a class="button" href="writeup.pdf">View Documentation</a>
+
+  </main>
+
+  <footer>
+   
+  </footer>
+</body>
+</html>
